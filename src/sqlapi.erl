@@ -3,6 +3,42 @@
 -include("../include/sqlapi.hrl").
 -include("myproto.hrl").
 
+-callback authorize(Username :: any(), HashedPassword :: any(), ClientSalt :: any(), Args :: any()) ->
+   {ok, State :: any()}.
+
+-callback connect_db(Database::binary(), State :: any()) ->
+   {ok, State :: any()} | {error, Code :: integer(), Description :: binary()}.
+
+-callback databases(State :: any()) ->
+   [DBName::binary()].
+
+-callback database(State :: any()) ->
+   DBName :: undefined | binary().
+
+-callback tables(State :: any()) ->
+   [TableName::binary()].
+
+-callback columns(Table::binary(),State :: any()) ->
+   [{ColumnName::atom(),ColumnType:: 'string' | 'boolean' | 'integer'}].
+
+-callback terminate(Reason :: any(), State :: any()) ->
+   ok.
+
+-callback select(Table::binary(),Conditions :: any(),State :: any()) ->
+   [Row :: map()].
+
+-callback insert(Table::binary(), [#{Key::binary() => Value::any()}], State :: any()) ->
+   {ok,#{status =>ok, affected_rows=>1}} | {error,Code :: integer(),Desc :: binary()}.
+
+-callback update(Table::binary(), #{Key::binary() => Value::any()}, Conditions :: any(), State :: any()) ->
+   {ok,#{status =>ok, affected_rows=> non_neg_integer()}} | {error,Code :: integer(),Desc :: binary()}.
+
+-callback delete(Table::binary(), Conditions :: any(), State :: any()) ->
+   {ok,#{status => ok, affected_rows=> non_neg_integer()}} | {error,Code :: non_neg_integer(),Desc :: binary()}.
+
+-callback fncall(Name::binary(), Param :: list(any()), State :: any()) ->
+   ok.
+
 
 -export([start_server/1, stop_server/1, existing_port/1, load_config/1]).
 

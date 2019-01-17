@@ -1,5 +1,7 @@
 -module(sql_ets_api).
 
+-behaviour(sqlapi).
+
 -export([authorize/4, connect_db/2, database/1, databases/1, tables/1, columns/2, terminate/2]).
 -export([select/3, insert/3, update/4, delete/3, fncall/3]).
 
