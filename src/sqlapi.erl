@@ -3,6 +3,8 @@
 -include("../include/sqlapi.hrl").
 -include("myproto.hrl").
 
+-optional_callbacks([select/3, insert/3, update/4, delete/3]).
+
 -callback authorize(Username :: any(), HashedPassword :: any(), ClientSalt :: any(), Args :: any()) ->
    {ok, State :: any()}.
 
@@ -25,7 +27,7 @@
    ok.
 
 -callback select(Table::binary(),Conditions :: any(),State :: any()) ->
-   [Row :: map()].
+   [Row :: map()] | {error, Code :: integer(), Desc :: binary()}.
 
 -callback insert(Table::binary(), [#{Key::binary() => Value::any()}], State :: any()) ->
    {ok,#{status =>ok, affected_rows=>1}} | {error,Code :: integer(),Desc :: binary()}.
