@@ -1,11 +1,12 @@
 {application, sqlapi,
  [
-  {description, ""},
+  {description, "This library helps you to create an erlang application into a SQL server."},
   {vsn, "1.0.0"},
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  ranch
                  ]},
   {mod, { sqlapi_app, []}},
   {env, []}
